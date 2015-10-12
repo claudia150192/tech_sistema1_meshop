@@ -1,0 +1,2 @@
+[13-Jun-2015 21:04:37 America/Denver] PHP Notice:  Undefined index: extension in /home4/cmclmcom/public_html/clmdevelopers/meshop/assets/html2pdf/_tcpdf_5.0.002/fonts/utils/makeallttffonts.php on line 60
+[13-Jun-2015 21:04:37 America/Denver] PHP Notice:  Undefined index: argv in /home4/cmclmcom/public_html/clmdevelopers/meshop/assets/html2pdf/_tcpdf_5.0.002/fonts/utils/makefont.php on line 586
