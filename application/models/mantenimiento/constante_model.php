@@ -6,14 +6,15 @@ class constante_model extends CI_Model {
 		parent::__construct();
 	}
 
-	function insert($desc){
+	function insert($data){
 		
 		$query = $this->db->query("SELECT (max(valor)+1) as valor FROM constante where clase=2");
 
 		$data = array(
-			'descripcion' =>$desc,
+			'descripcion' =>$data["descripcion"],
 			'clase' => '2',
-			'valor' => $query->row_array()['valor']
+			'valor' => $query->row_array()['valor'],
+            'tipo' => $data["tipo"]
 		);
 
 		if ($this->db->insert('constante',$data)){

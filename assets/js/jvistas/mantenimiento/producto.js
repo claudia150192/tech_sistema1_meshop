@@ -12,6 +12,7 @@ $(document).ready(function(){
 		$("#frm-registro").reset();
 	});
 
+
 	var successEditproducto = function(){
 		$.unblockUI({
 			onUnblock: function(){
@@ -121,6 +122,8 @@ $(document).ready(function(){
 		});
 	});
 
+    var id_producto;
+   
 	var productoTA = new DTActions({
 		'botones': [
 			{
@@ -145,6 +148,20 @@ $(document).ready(function(){
 					$("#ind_2").addClass("active");
 					$("#lista").removeClass("in active");
 					$("#registro").addClass("in active");
+					id_producto=aData.nProCodigo
+				$.ajax({
+				type: 'GET',
+				dataType: "json",
+				url:base_url+'mantenimiento/producto/get_producto_por_venta/'+id_producto,
+				success:function(data){
+					jQuery.each( data.aaData, function( key, value ) {
+					if(parseInt(value["contaventa"])==0){
+                     $("#cboUnidadMedida").removeAttr("disabled");
+					}else{ $("#cboUnidadMedida").attr('disabled', 'disabled');}
+					});
+		         }
+	           });
+					
 				},
 			},
 			{

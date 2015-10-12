@@ -74,7 +74,16 @@ $(document).ready(function(){
 				'icon':'fa fa-edit',
 				'tooltip':'editar',
 				'clickfunction': function(nRow, aData, iDisplayIndex) {
-					edtiarUnidadMedida(aData.int_constante_id,aData.descripcion,successEditUnidades,errorEditUnidades);
+					edtiarUnidadMedida(aData.int_constante_id,aData.descripcion,aData.tipo,successEditUnidades,errorEditUnidades);
+                  if(aData.tipo=="Entero"){
+                  $("#tipo_edit").append('<option value="Entero">Entero</option>');
+                  $("#tipo_edit").append('<option value="Decimal">Decimal</option>');}
+                  else if(aData.tipo=="Decimal"){
+                  $("#tipo_edit").append('<option value="Decimal">Decimal</option>');
+                  $("#tipo_edit").append('<option value="Entero">Entero</option>');}
+                  else{
+                  $("#tipo_edit").append('<option value="Decimal">Decimal</option>');
+                  $("#tipo_edit").append('<option value="Entero">Entero</option>');}
 				},
 			},
 			]
@@ -88,6 +97,7 @@ $(document).ready(function(){
 		"aoColumns":[
 			{ "mDataProp": "int_constante_id"},
 			{ "mDataProp": "descripcion"},
+			{ "mDataProp": "tipo"}
 		],
 		"sDom": 'T<"clear">lfrtip',
 		"fnCreatedRow": unidadesTA.RowCBFunction,
@@ -104,7 +114,7 @@ $(document).ready(function(){
 
 });
 
-function edtiarUnidadMedida(id_unidad,var_descripcion,successEditUnidades,errorEditUnidades){
+function edtiarUnidadMedida(id_unidad,var_descripcion,var_tipo,successEditUnidades,errorEditUnidades){
 	bootbox.dialog({
 		title: "Actualizar",
 		message:'<div class="row">' +'<div class="col-md-12"> ' +
@@ -112,6 +122,7 @@ function edtiarUnidadMedida(id_unidad,var_descripcion,successEditUnidades,errorE
 				'<label class="col-md-4 control-label" for="descripcion_edit">Descripción</label> ' +
 				'<div class="col-md-4"> ' +
 				'<input id="descripcion_edit" name="descripcion_edit" type="text" class="form-control input-md" value="'+var_descripcion+'"></div>'+
+				'<div class="col-md-4"><select class="form-control" id="tipo_edit" name="tipo_edit" placeholder="Tipo">'+
 				'<input id="int_constante_id" name="int_constante_id" type="text" hidden value="'+id_unidad+'"></div>'+
 				'</div> ' +'</form> </div> </div>',
 		buttons: {

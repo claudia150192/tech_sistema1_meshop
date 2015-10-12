@@ -313,7 +313,16 @@ class registrar_venta extends CI_Controller {
 		$letra=strtoupper($V->ValorEnLetras($monto,'con'));
 		$this->output
 			->set_content_type('application/json')
-			->set_output(json_encode($letra));
+			->set_output(json_encode(array('aaData' => $result)));
+	}
+
+	public function obtener_tipo_dato_stock($id)
+	{
+		$this->load->model('venta/registrar_venta_model','mod');
+		$result = $this->mod->obtener_tipo($id);
+		$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode(array('aaData' => $result)));
 	}
 
 }

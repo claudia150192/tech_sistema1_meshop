@@ -137,6 +137,11 @@ class registrar_venta_model extends CI_Model {
 		return $query->row_array();
 	}
 
+	function obtener_tipo($id){
+		$query = $this->db->query("select c.tipo,c.descripcion FROM producto p inner join constante c on c.valor=p.unidamedida WHERE c.clase=2 and c.valor!=0 and p.nProCodigo=".$id);
+		return $query->result_array();
+	}
+
 	function obtener_venta($id_venta){
 		$query = $this->db->query("select * from obtener_factura where nVenCodigo=".$id_venta." order by 1");
 

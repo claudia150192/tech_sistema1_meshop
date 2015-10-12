@@ -16,6 +16,7 @@
 									<tr>
 										<th>ID</th>
 										<th>Descripción</th>
+                                        <th>Tipo de Dato</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -36,6 +37,10 @@
 								<div class="input-group mar-btm">
 									<span class="input-group-addon"><i class="fa fa-star fa-lg"></i></span>
 									<input type="text" class="form-control" placeholder="Descripción" id="descripcion" name="descripcion">
+								</div>
+									<div class="input-group mar-btm">
+									<span class="input-group-addon"><i class="fa fa-star fa-lg"></i></span>
+									<select class="form-control" id="tipo" name="tipo" placeholder="Tipo"><option value="Entero">Entero</option><option value="Decimal">Decimal</option></select>
 								</div>
 							</div>
 							<div class="panel-footer">

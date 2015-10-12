@@ -136,5 +136,11 @@ class producto_model extends CI_Model {
     	$query = $this->db->query("SELECT producto.*, categoria.descripcion as desc_categoria FROM producto inner join categoria on categoria.nCatCodigo=producto.nCatCodigo and categoria.estado='1'".$add);
         return $query->result_array();
 	}
+
+	function get_total_venta_por_producto($id){
+        $query = $this->db->query("select count(t.`nVenCodigo`) as contaventa FROM `transaccion` t
+        inner join producto p on p.nProCodigo=t.`nProCodigo` where p.nProCodigo=".$id);
+        return $query->result_array();
+	}
 	
 }

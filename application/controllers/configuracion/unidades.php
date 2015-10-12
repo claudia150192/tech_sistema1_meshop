@@ -16,8 +16,15 @@ class unidades extends CI_Controller {
 			$this->load->model('mantenimiento/constante_model','mod');
 
 			$descripcion = $form["descripcion"];
+			$tipo = $form["tipo"];
 
-			if($this->mod->insert($descripcion)){
+			$data = array(
+				'descripcion' =>$descripcion,
+				'tipo' =>$tipo
+			);	
+
+
+			if($this->mod->insert($data)){
 				$return = array("responseCode"=>200, "datos"=>"ok");
 			}else{
 				$return = array("responseCode"=>400, "greeting"=>"Bad");
@@ -40,10 +47,12 @@ class unidades extends CI_Controller {
 			$this->load->model('mantenimiento/constante_model','mod');
 
 			$descripcion = $form["descripcion_edit"];
+			$tipo = $form["tipo_edit"];
 			
 			$int_constante_id = $form["int_constante_id"];
 			$data = array(
-				'descripcion' =>$descripcion
+				'descripcion' =>$descripcion,
+				'tipo' =>$tipo
 			);	
 
 			if($this->mod->update($int_constante_id,$data)){

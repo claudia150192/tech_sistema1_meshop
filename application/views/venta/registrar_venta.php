@@ -174,7 +174,7 @@
 												<div class="input-group mar-btm">
 													<span class="input-group-addon"><i style="font-weight: bold;"><?php echo $signo;?></i></span>
 													<input type="text" class="form-control add-tooltip" placeholder="Precio Venta" id="precio_venta" name="precio_venta" 
-													data-placement="bottom" data-toggle="tooltip" data-original-title="Precio Venta">
+													data-placement="bottom" data-toggle="tooltip" data-original-title="Precio Venta" disabled>
 												</div>
 											</div>
 										</div>

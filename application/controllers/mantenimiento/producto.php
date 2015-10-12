@@ -161,6 +161,15 @@ class producto extends CI_Controller {
 			->set_output(json_encode(array('aaData' => $result)));
 	}
 
+	public function get_producto_por_venta($id)
+	{
+		$this->load->model('mantenimiento/producto_model','pm');
+		$result = $this->pm->get_total_venta_por_producto($id);
+		$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode(array('aaData' => $result)));
+	}
+
 	public function get_constante_unidadmedida()
 	{
 		$this->load->model('mantenimiento/constante_model','pm');

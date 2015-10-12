@@ -67,8 +67,24 @@ $(document).ready(function(){
 		var stock = parseFloat($("#stock_disponible").val());
 		var cantidad = parseFloat($("#cant_producto").val());
 		var importe = cantidad * precioventa;
-		
-		if( !isNaN(id) & !isNaN(precioventa) & nombre!='' & !isNaN(cantidad) ){
+        var tipo_stock;
+        var status_tipo;
+		$.ajax({
+				type: 'GET',
+				dataType: "json",
+				url:base_url+'venta/registrar_venta/obtener_tipo_dato_stock/'+id,
+				success:function(data){
+					jQuery.each( data.aaData, function( key, value ) {
+				     
+			if( !isNaN(id) & !isNaN(precioventa) & nombre!='' & !isNaN(cantidad) ){
+            status_tipo=true;
+
+            if(value["tipo"]=="Entero"){
+              if(cantidad % 1==0){status_tipo=true;}else{status_tipo=false;}
+              
+			}
+            
+            if(status_tipo){
 			if(cantidad<=stock){
 			var detalle = new Array();
 			var obj = 	{
@@ -100,7 +116,9 @@ $(document).ready(function(){
             $("#cant_producto").attr('data-original-title','Debe ser menor o igual al Stock disponible.');
 			//console.log("La cantidad a vender debe ser menor o igual al Stock disponible.");
 		}
-		}else{
+	}else{ $("#cant_producto").css('border-color','red');
+            $("#cant_producto").attr('data-original-title','El valor ingresado debe ser Entero');}
+	}else{
 			  
                    bootbox.dialog({
 						title: "Error",
@@ -114,6 +132,11 @@ $(document).ready(function(){
 					});
                    //console.log("No se admite campos vacios");
 		}
+
+				});}
+		});
+	
+		
 	});
 
 	$('#btn-guardar').click(function(event) {
