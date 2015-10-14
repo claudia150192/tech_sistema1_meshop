@@ -25,6 +25,7 @@
 	<link href="<?php echo base_url();?>assets/css/themes/type-c/theme-dark.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>assets/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>assets/plugins/morris-js/morris.min.css" rel="stylesheet">
+	
 
 </head>
 

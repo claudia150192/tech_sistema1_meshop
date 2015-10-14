@@ -142,5 +142,12 @@ class producto_model extends CI_Model {
         inner join producto p on p.nProCodigo=t.`nProCodigo` where p.nProCodigo=".$id);
         return $query->result_array();
 	}
+
+
+	public function findData($search)
+	{
+		$query = $this->db->query("sELECT ruc,nombre FROM proveedor WHERE nombre LIKE '%".$search."%'");
+       return $query->result_array();
+	}
 	
 }

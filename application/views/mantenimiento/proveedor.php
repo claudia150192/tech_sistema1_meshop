@@ -1,5 +1,5 @@
 <div id="page-title">
-			<h1 class="page-header text-overflow">proveedor</h1>
+			
 		</div>
 
 		<div id="page-content">
@@ -7,9 +7,16 @@
 				<div class="col-lg-7">
 					<div class="panel">
 						<div class="panel-heading">
-							<h3 class="panel-title">Lista de proveedor</h3>
+						<div class="panel-control">
+							<ul class="nav nav-tabs">
+								<li class="active" id="ind_1"><a href="#lista" data-toggle="tab" >Proveedor</a></li>
+								<li id="ind_2"><a href="#registro" data-toggle="tab" >Marca</a></li>
+							</ul>
 						</div>
+						<h3 class="panel-title">Lista</h3>
+					</div>
 						<div class="panel-body">
+							<div class="tab-pane fade in active" id="lista_proveedor">
 							<table id="tbl_proveedor" class="table table-striped table-bordered" cellspacing="0" width="100%"
 							data-source="<?php echo base_url();?>mantenimiento/proveedor/get_proveedor_all/">
 								<thead>
@@ -23,6 +30,22 @@
 								<tbody>
 								</tbody>
 							</table>
+							</div>
+							<div class="tab-pane fade" id="lista_marca">
+							<table id="tbl_marca" class="table table-striped table-bordered" cellspacing="0" width="100%"
+							data-source="<?php echo base_url();?>mantenimiento/proveedor/get_proveedor_all/">
+								<thead>
+									<tr>
+										<th>RUC</th>
+										<th>Proveedor2</th>
+										<th>Teléfono2</th>
+										<th>Email</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+							</div>
 						</div>
 					</div>
 				</div>

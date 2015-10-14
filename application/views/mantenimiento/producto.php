@@ -1,6 +1,7 @@
 	<!--<div id="page-title">
 		<h1 class="page-header text-overflow">Producto</h1>
 	</div>-->
+
 	<div id="page-content">
 		<div class="row">
 			<div class="col-lg-12">
@@ -41,12 +42,15 @@
 									<form class="form-horizontal" id="frm-registro" name="frm-registro" action-1="<?php echo base_url();?>mantenimiento/producto/registrar"
 									action-2="<?php echo base_url();?>mantenimiento/producto/actualizar" 
 									action-3="<?php echo base_url();?>mantenimiento/producto/eliminar" >
-										<div class="panel-body">
-											<div class="row">
-												<div class="col-sm-6">
-													<div class="input-group mar-btm">
+										<div class="panel-body" >
+											<div class="row" >
+												<div class="col-sm-6" >
+													<div class="row-fluid">
+														<div class="input-group mar-btm"  id="buscador" >
 														<span class="input-group-addon"><i class="fa fa-credit-card fa-lg"></i></span>
-														<input type="text" class="form-control" placeholder="Cod Proveedor" id="codproveedor" name="codproveedor">
+														<input type="text" class="form-control" placeholder="Buscar Cod Proveedor" id="codproveedor" name="codproveedor">
+														</div>
+														<div class="input-group mar-btm" id="busqueda" style="position: absolute; left: 57px; top: 30px; z-index: 100;"></div>
 													</div>
 												</div>
 												<div class="col-sm-6">

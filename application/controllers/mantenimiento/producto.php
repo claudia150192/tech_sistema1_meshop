@@ -179,4 +179,20 @@ class producto extends CI_Controller {
 			->set_output(json_encode(array('aaData' => $result)));
 	}
 
+ public function get_find()
+	{
+		$this->load->model('mantenimiento/producto_model','pm');
+		$id = $this->input->post('autocomplete');
+		$result = $this->pm->findData($id);
+
+        if($result > 0)
+        {
+        	echo json_encode(array('res' => 'full', 'data' => $result));
+        }
+        else
+        {
+        	echo json_encode(array('res' => 'empty'));
+        }
+	}
+
 }

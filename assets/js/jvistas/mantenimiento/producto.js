@@ -7,7 +7,8 @@ $(document).ready(function(){
 	$("#btn-actualizar").hide();
 
 	$("#btn-cancelar").click(function(){
-		$("#btn-actualizar").hide();
+		$("#cboUnidadMedida").removeAttr("disabled");
+        $("#btn-actualizar").hide();
 		$("#btn-guardar").show();
 		$("#frm-registro").reset();
 	});
@@ -195,7 +196,69 @@ $(document).ready(function(){
 	productoTable = createDataTable2('tbl_producto',productoOptions);
 	reloadTable();
 
+
+
+	$.fn.delayPasteKeyUp = function(fn, ms)
+    {
+        var timer = 0;
+        $(this).on("keyup paste", function()
+        {
+            clearTimeout(timer);
+            timer = setTimeout(fn, ms);
+        });
+    };
+ 
+    $("input[name=codproveedor]").delayPasteKeyUp(function()
+    {
+    	$("#busqueda").show();
+        $.ajax({
+        	type: "POST",
+            url: base_url+'mantenimiento/producto/get_find/',
+            data: "autocomplete="+$("input[name=codproveedor]").val(),
+            success: function(data)
+            {
+            	if(data)
+            	{
+            		var json = JSON.parse(data),
+            			html = '<div class="list-group">';
+            		if(json.res == 'full')
+            		{
+            			for(datos in json.data)
+            			{
+            				html+='<a href="#" onclick="info('+json.data[datos].ruc+',\''+json.data[datos].nombre+'\')" class="list-group-item">';
+            				html+='<h4 class="list-group-item-heading">RUC/DNI:' + json.data[datos].ruc;
+            				html+=' Nombre: ' + json.data[datos].nombre+'</h4>';
+            				html+='</a>';
+            			}
+            		}
+            		else
+            		{
+            			alert(json.res);
+            			html+='<a href="#" class="list-group-item">';
+        				html+='<h4 class="list-group-item-heading">No se ha encontrado nada con '+$("input[name=codproveedor]").val()+'</h4>';
+        				html+='</a>';
+            		}
+            		html+='</div>';
+            		$("#busqueda").html("").append(html);
+            	}
+            }
+        });
+    }, 500);
+ 
+	$(document).on("click", "a", function()
+	{
+		$("a").removeClass("active");
+		$(this).addClass("active");
+
+	});
+
 });
+
+function info(id,nombre)
+{
+	$("#codproveedor").val(id);
+	$("#busqueda").hide();
+}
 
 function eliminarproducto(id_producto,successEliminarproducto,errorEliminarproducto){
 	enviar($("#frm-registro").attr("action-3"),{formulario:{"id_producto":id_producto}}, successEliminarproducto, errorEliminarproducto);	
