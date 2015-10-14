@@ -226,18 +226,18 @@ $(document).ready(function(){
             			for(datos in json.data)
             			{
             				html+='<a href="#" onclick="info('+json.data[datos].ruc+',\''+json.data[datos].nombre+'\')" class="list-group-item">';
-            				html+='<h4 class="list-group-item-heading">RUC/DNI:' + json.data[datos].ruc;
+            				html+='<h4 >RUC/DNI:' + json.data[datos].ruc;
             				html+=' Nombre: ' + json.data[datos].nombre+'</h4>';
             				html+='</a>';
             			}
             		}
-            		else
-            		{
-            			alert(json.res);
-            			html+='<a href="#" class="list-group-item">';
-        				html+='<h4 class="list-group-item-heading">No se ha encontrado nada con '+$("input[name=codproveedor]").val()+'</h4>';
-        				html+='</a>';
-            		}
+            // 		else
+            // 		{
+            // 			alert(json.res);
+            // 			html+='<a href="#" class="list-group-item">';
+        				// html+='<h4 class="list-group-item-heading">No se ha encontrado nada con '+$("input[name=codproveedor]").val()+'</h4>';
+        				// html+='</a>';
+            // 		}
             		html+='</div>';
             		$("#busqueda").html("").append(html);
             	}
@@ -254,10 +254,27 @@ $(document).ready(function(){
 
 });
 
-function info(id,nombre)
-{
+function info(id,nombre){
+	alert("hola");
 	$("#codproveedor").val(id);
 	$("#busqueda").hide();
+    loadCmbJson();
+}
+
+
+function loadCmbJson(){
+//borramos el contenido de los option del select
+$("#marca").html("");
+//invoca el metodo obtener Json por post
+$.ajax({
+type: 'GET',
+		dataType: "json",
+		 url: base_url+"mantenimiento/proveedor/get_marca_all/"+$("#codproveedor").val(),
+		success:function(data){
+			jQuery.each( data.aaData, function( key, value ) {
+            	$("#marca").append("<option value='"+value["int_constante_id"]+"'>"+value["descripcion"]+"</option>");  });
+		}
+});
 }
 
 function eliminarproducto(id_producto,successEliminarproducto,errorEliminarproducto){

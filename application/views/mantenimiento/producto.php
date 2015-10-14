@@ -83,7 +83,8 @@
 												<div class="col-sm-6">
 													<div class="input-group mar-btm">
 														<span class="input-group-addon"><i class="fa fa-envelope fa-lg"></i></span>
-														<input type="text" class="form-control" placeholder="Marca" id="marca" name="marca">
+														<select class="form-control" placeholder="Marca" id="marca" name="marca">
+														</select>
 													</div>
 												</div>
 												<div class="col-sm-6">
