@@ -26,7 +26,7 @@ class usuario_model extends CI_Model {
 	function delete($id){
 		$data = array('estado' => '0');
 		$this->db->where('nUsuCodigo',$id);
-		if ($this->db->delete('usuario',$data)){
+		if ($this->db->update('usuario',$data)){
 			return true;
 		}else{
 			return false;
