@@ -313,7 +313,7 @@ class registrar_venta extends CI_Controller {
 		$letra=strtoupper($V->ValorEnLetras($monto,'con'));
 		$this->output
 			->set_content_type('application/json')
-			->set_output(json_encode(array('aaData' => $result)));
+			->set_output(json_encode($letra));
 	}
 
 	public function obtener_tipo_dato_stock($id)

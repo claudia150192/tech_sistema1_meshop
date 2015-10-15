@@ -320,8 +320,8 @@
 								<div class="panel-footer">
 									<div class="row">
 										<div class="col-sm-9 col-sm-offset-3">
-											<button class="btn btn-primary btn-labeled fa fa-save fa-lg" id="btn-guardar_modal">Guardar</button>
-											<button class="btn btn-danger btn-labeled fa fa-repeat fa-lg" id="btn-cancelar_modal" type="reset">Cancelar</button>
+											<button class="btn btn-primary btn-labeled fa fa-save fa-lg" id="btn-guardar">Guardar</button>
+											<button class="btn btn-danger btn-labeled fa fa-repeat fa-lg" id="btn-cancelar" type="reset">Cancelar</button>
 										</div>
 									</div>
 								</div>
