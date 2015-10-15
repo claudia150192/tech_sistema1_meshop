@@ -84,6 +84,7 @@
 													<div class="input-group mar-btm">
 														<span class="input-group-addon"><i class="fa fa-envelope fa-lg"></i></span>
 														<select class="form-control" placeholder="Marca" id="marca" name="marca">
+															<option value="" disabled selected hidden>Marca</option>
 														</select>
 													</div>
 												</div>

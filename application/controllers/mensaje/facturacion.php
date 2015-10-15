@@ -13,7 +13,7 @@ class facturacion extends CI_Controller {
         $venta = $this->mod->cabecera_venta($nVenta_id);
         $detventa = $this->mod->detalle_venta($nVenta_id);
         $ClienteCorreo = $this->input->post('email_to');         
-        $from = "ricoru21@gmail.com"; 
+        $from = "sjacevedo@elventon.net"; 
 
         $html = '<!DOCTYPE html>
         <html>

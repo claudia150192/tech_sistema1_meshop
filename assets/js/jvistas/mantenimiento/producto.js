@@ -255,7 +255,6 @@ $(document).ready(function(){
 });
 
 function info(id,nombre){
-	alert("hola");
 	$("#codproveedor").val(id);
 	$("#busqueda").hide();
     loadCmbJson();
@@ -275,6 +274,7 @@ type: 'GET',
             	$("#marca").append("<option value='"+value["int_constante_id"]+"'>"+value["descripcion"]+"</option>");  });
 		}
 });
+
 }
 
 function eliminarproducto(id_producto,successEliminarproducto,errorEliminarproducto){

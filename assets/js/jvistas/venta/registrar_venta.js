@@ -85,6 +85,7 @@ $(document).ready(function(){
 			}
             
             if(status_tipo){
+
 			if(cantidad<=stock){
 			var detalle = new Array();
 			var obj = 	{
@@ -96,12 +97,13 @@ $(document).ready(function(){
 			var index = $(detalleTable.fnGetData()).getIndexObj(obj,'id');
 
 			if(index===null && nro_registro<=10){
+
 				detalle[0] = obj;
 				detalleTable.fnAddData(detalle);
 				detalle.splice(0,detalle.length);
 				
 				calcularMontoApagar('importe');
-
+               
 				$("#cod_producto").val('');
 				$("#nombre_producto").val('');
 				$("#precio_venta").val('');

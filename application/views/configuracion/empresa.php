@@ -14,7 +14,7 @@
 						enctype="multipart/form-data">
 							<div class="panel-body">
 								<div class="input-group mar-btm">
-									<span class="input-group-addon"><i class="fa fa-credit-card fa-lg"></i></span>
+									<span class="input-group-addon"><i class="fa fa-home fa-lg"></i></span>
 									<input type="text" class="form-control" placeholder="Razón Social" id="razonsocial" name="razonsocial"
 									value="<?php echo $empresa['RazonSocialEmpresa'];?>">
 								</div>
@@ -27,11 +27,11 @@
 									<input type="text" class="form-control" placeholder="Teléfono Empresa" id="telefono" name="telefono" value="<?php echo $empresa['TelefonoEmpresa'];?>">
 								</div>
 								<div class="input-group mar-btm">
-									<span class="input-group-addon"><i class="fa fa-envelope fa-lg"></i></span>
+									<span class="input-group-addon">@</span>
 									<input type="email" class="form-control" placeholder="Email Empresa" id="email" name="email" value="<?php echo $empresa['EmailEmpresa'];?>">
 								</div>
 								<div class="input-group mar-btm">
-									<span class="input-group-addon"><i class="fa fa-phone fa-lg"></i></span>
+									<span class="input-group-addon"><i class="fa fa-globe fa-lg"></i></span>
 									<input type="text" class="form-control" placeholder="Dirección Empresa" id="direccion" name="direccion" value="<?php echo $empresa['DireccionEmpresa'];?>">
 								</div>
 								<div class="input-group mar-btm">

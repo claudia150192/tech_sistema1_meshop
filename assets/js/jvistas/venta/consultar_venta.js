@@ -2,13 +2,28 @@ var fecha=null,anio=0,mes=0,tipo=0;
 $(document).ready(function(){
 
 	$("#fechaDia").val(fechanow());
-
+	$("#modal1").hide();
+	
 	$('#fechaDia').datepicker({
 		format: "dd/mm/yyyy",
 		todayBtn: "linked",
 		autoclose: true,
 		language: "es",
 		});
+
+	$("#btn-guardar_modal").click(function (e){
+		enviar(base_url+"venta/anular_venta/anular",{id_venta:aData.nVenCodigo}, successAnularVenta, null);
+	});
+
+	$("#btn-cancelar_modal").click(function (e){
+		$.niftyNoty({
+								type: 'danger',
+								icon : 'fa fa-times',
+								message : "Operación cancelada",
+								container : 'floating',
+								timer : 3000
+		 });
+	});
 
 	$("#btn-dia").click(function (e){
 		e.preventDefault();
@@ -61,19 +76,20 @@ $(document).ready(function(){
 				'icon':'fa fa-edit',
 				'tooltip':'Anular Venta',
 				'clickfunction': function(nRow, aData, iDisplayIndex) {
-					bootbox.confirm("Desea Anular la Venta?", function(result){
-						if(result==true){
-							enviar(base_url+"venta/anular_venta/anular",{id_venta:aData.nVenCodigo}, successAnularVenta, null);
-						}else{
-							$.niftyNoty({
-								type: 'danger',
-								icon : 'fa fa-times',
-								message : "Operación cancelada",
-								container : 'floating',
-								timer : 3000
-							});
-						}
-					}); 
+					$("#modal1").click();
+					// bootbox.confirm("Desea Anular la Venta?", function(result){
+					// 	if(result==true){
+					// 		enviar(base_url+"venta/anular_venta/anular",{id_venta:aData.nVenCodigo}, successAnularVenta, null);
+					// 	}else{
+					// 		$.niftyNoty({
+					// 			type: 'danger',
+					// 			icon : 'fa fa-times',
+					// 			message : "Operación cancelada",
+					// 			container : 'floating',
+					// 			timer : 3000
+					// 		});
+					// 	}
+					// }); 
 				},
 			}
 			]
@@ -99,8 +115,38 @@ $(document).ready(function(){
 	};
 	ventasTable = createDataTable2('tbl_venta',VentasOptions);
 
+
+var arrayCheck = new Array();
+	var accesosOptions = {
+		"aoColumns":[
+			{ "mDataProp": "producto"},
+			{ "mDataProp": "total"},
+			{ "mDataProp": "check"}
+		],
+		"fnCreatedRow":function(nRow, aData, iDisplayIndex)
+		{
+			arrayCheck.push($(nRow).find(".cbox"));
+			$(nRow).find(".cbox").change(function(){
+				if($(this).is(':checked'))
+				{
+					$(nRow).find(".desc").text(" Anulado");
+					aData.estado = 1;
+				}
+				else
+				{
+					$(nRow).find(".desc").text(" No se Anula");
+					aData.estado = 0;
+				}
+			});
+		}
+	};
+	accesosTable = createDataTable2('tbl_anulado',accesosOptions);
 });
 
 function reloadTable(fecha,anio,mes,tipo){
 	ventasTable.fnReloadAjax(base_url+"venta/consultar_venta/get_ventas_all/"+fecha+"/"+anio+"/"+mes+"/"+tipo);
+}
+
+function reloadPerfil(id_usuario){
+	accesosTable.fnReloadAjax(base_url+"mantenimiento/usuario/get_accesos_byperfil/"+id_usuario);
 }
