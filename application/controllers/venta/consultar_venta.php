@@ -39,5 +39,14 @@ class consultar_venta extends CI_Controller {
 			->set_output(json_encode(array('aaData' => $result)));
 	}
 
+	public function get_ventas_facturadas($idventa)
+	{
+		$this->load->model('venta/registrar_venta_model','mod');
+		$result = $this->mod->obtener_venta2($idventa);
+		$this->output
+			->set_content_type('application/json')
+			->set_output(json_encode(array('aaData' => $result)));
+	}
+
 
 }

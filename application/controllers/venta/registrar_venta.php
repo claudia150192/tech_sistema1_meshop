@@ -130,7 +130,8 @@ class registrar_venta extends CI_Controller {
 							'cantidad' => $row["cantidad"]*-1,
 							'preciounitario' => $row["preciounidad"],
 							'importe' => $row["importe"],
-							'local' => 1
+							'local' => 1,
+							'id_usuario' => $this->session->userdata('persona')["nUsuCodigo"]
 						);
 
 						array_push($lista3,$list_kard);

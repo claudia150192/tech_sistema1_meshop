@@ -148,6 +148,33 @@ class registrar_venta_model extends CI_Model {
 		return $query->result_array();
 	}
 
+	function obtener_kardex($id_venta,$id_producto){
+		$query = $this->db->query("select * from obtener_factura where nVenCodigo=".$id_venta." and Codproducto=".$id_producto." order by 1");
+
+		return $query->row_array();
+	}
+
+	function obtener_venta2($id_venta){
+		$query = $this->db->query("select Codproducto,nombre,cantidad,preciounitario,importe,1 as 'check' from obtener_factura where nVenCodigo=".$id_venta." order by 1");
+        if ($this->db->trans_status() === FALSE)
+		{
+			return false;
+		}
+		else
+		{	
+			$accesos = $query->result_array();
+			if(count($accesos)>1){
+				foreach ($accesos as $key => $value) {
+				$check = '<input role="checkbox" type="checkbox" class="cbox"><span class="desc"></span>';
+				$accesos[$key]["check"] = $check;
+				}
+			}
+			return $accesos;
+		}
+
+		return $query->result_array();
+	}
+
 
 	function obtener_moneda_local(){
 		$query = $this->db->query("SELECT * FROM moneda limit 0,1");

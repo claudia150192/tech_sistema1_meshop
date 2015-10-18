@@ -22,7 +22,7 @@ class producto_model extends CI_Model {
 			return false;
 		}
 	}
-	
+
 	public function update_bloque($data)
 	{	
 		$this->db->update_batch('producto', $data, 'nProCodigo'); 	

@@ -207,9 +207,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Causa de la Anulación</h4>
+        <h4 class="modal-title" id="model_title_anular">Causa de la Anulación</h4>
       </div>
       <div class="modal-body">
+      	<form id="AnularForm" class="form-horizontal" action-1="<?php echo base_url();?>venta/anular_venta/anular"
+      		action-2="<?php echo base_url();?>venta/anular_venta/kardex_anular">  
       	<div class="row">
 												<div class="col-lg-12">
 
@@ -221,37 +223,44 @@
         </button>
  
         <ul class="dropdown-menu" role="menu">
-          <li><a href="#">Por daño</a></li>
-           <li><a href="#">Devolución pactada</a></li>
+          <li ><a href="#" id="1_accion">Por daño</a></li>
+           <li ><a href="#" id="2_accion">Devolución pactada</a></li>
           <!-- <li class="divider"></li> -->
         </ul>
       </div>
 
-      <input type="text" class="form-control" placeholder="Comentarios">
+      <input type="text" class="form-control" placeholder="Comentarios" id="Comentarios" class="Comentarios" name="Comentarios">
   </div>
-   
+  
 											</div>
       	 </div>
       	 <div class="row">
 		<div class="panel-body">
-							<table id="tbl_anulado" class="table table-striped table-bordered" cellspacing="0" width="100%">
+							<table id="tbl_anulado" class="table table-striped table-bordered" cellspacing="0" width="100%"
+									data-source="<?php echo base_url();?>mantenimiento/usuario/get_usuario_all/">
 								<thead>
 									<tr>
-										<th>Menu</th>
-										<th>Sub-Menu</th>
+										<th>Codigo</th>
+										<th>Descripcion</th>
+										<th>Cantidad</th>
+										<th>Precio</th>
+										<th>Importe</th>
 										<th>Estado</th>
 									</tr>
 								</thead>
 								<tbody>
 								</tbody>
 							</table>
-						</div>
+		</div>
      
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-guardar_modal">Guardar</button>
-        <button type="button" class="btn btn-danger btn-labeled fa fa-repeat fa-lg" data-dismiss="modal" id="btn-cancelar_modal">Cancelar</button>
+        <button type="button" class="btn btn-danger btn-labeled fa fa-close fa-lg" data-dismiss="modal" id="btn-cancelar_modal">Cancelar</button>
       </div>
       </div>
+      <input type="hidden" id="id_seleccionado" class="id_seleccionado" name="id_seleccionado">
+      <input type="hidden" id="id_venta" class="id_venta" name="id_venta">
+      </form>
     </div>
 
   </div>

@@ -335,6 +335,21 @@ function recoveryOprions(inputoptions){
 	return outputoptions;
 }
 
+
+function createDataTable1(idTable, options){
+	var TOptios = recoveryOprions(options);
+	var oTable = $('#'+idTable).dataTable({	   
+		"aoColumns": TOptios.aoColumns,
+		 "bPaginate": false,
+		 "bFilter": false,
+		 "bDestroy": true,
+		 "fnCreatedRow": TOptios.fnCreatedRow	
+       
+	});
+	return oTable;
+}
+
+
 function createDataTable2(idTable, options){
 	var TOptios = recoveryOprions(options);
 	var asInitVals = new Array();

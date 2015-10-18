@@ -11,9 +11,46 @@ $(document).ready(function(){
 		language: "es",
 		});
 
-	$("#btn-guardar_modal").click(function (e){
-		enviar(base_url+"venta/anular_venta/anular",{id_venta:aData.nVenCodigo}, successAnularVenta, null);
-	});
+	$("#btn-guardar_modal").click(function(event){
+	  if($('#id_seleccionado').val()!=""){
+		event.preventDefault();
+		$('#tbl_anulado tbody tr').each(function () {
+            var cod_producto=$(this).find('td:eq(0)').html();
+            var cantidad=$(this).find('td:eq(2)').html();
+             var preciounidad=$(this).find('td:eq(3)').html();
+              var importe=$(this).find('td:eq(4)').html();
+  
+            if($('#tbl_anulado >tbody >tr').length==1){
+            	if($('#id_seleccionado').val()==1){
+            	enviar($("#AnularForm").attr("action-1"),$("#AnularForm").serializeObject(), null,null);
+            	enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe}}, successAnularVenta,error);
+                }
+            }else{
+             var estado=$(this).find('td:eq(5) .desc').html();
+             if(estado=="Se Anula"){
+             	if($('#id_seleccionado').val()==1){
+			 alert(estado + " "+cod_producto);
+             }}
+         }
+        });
+        //$("#myanulador").modal('hide');	
+		
+	  }else{$.niftyNoty({
+			type: 'danger',
+			icon : 'fa fa-times',
+			message : "operación cancelada: No ha seleccionado el tipo de acción",
+			container : 'floating',
+			timer : 3000
+		});}
+			
+	});	
+
+    $("[id*='_accion']").click(function(event){
+		if($(this).html()=="Devolución pactada"){$("#id_seleccionado").val(1);}
+		else if($(this).html()=="Por daño"){$("#id_seleccionado").val(0);}
+
+		$("#model_title_anular").html("Causa de la Anulación - "+$(this).html());
+	});	
 
 	$("#btn-cancelar_modal").click(function (e){
 		$.niftyNoty({
@@ -63,6 +100,23 @@ $(document).ready(function(){
 		});
 	}
 
+	var error = function(){
+		$.unblockUI({
+		    onUnblock: function(){
+				bootbox.dialog({
+					title: "Notificación",
+					message: "Error al Registrar", 
+					buttons: {
+						success: {
+							label: "OK!",
+							className: "btn-danger",
+						}
+					}
+				});
+		  	}
+        });	
+	}
+
 	var detalleTA = new DTActions({
 		'botones': [
 			{
@@ -77,6 +131,8 @@ $(document).ready(function(){
 				'tooltip':'Anular Venta',
 				'clickfunction': function(nRow, aData, iDisplayIndex) {
 					$("#modal1").click();
+					$("#id_venta").val(aData.nVenCodigo);
+					reloadAnulados(aData.nVenCodigo);
 					// bootbox.confirm("Desea Anular la Venta?", function(result){
 					// 	if(result==true){
 					// 		enviar(base_url+"venta/anular_venta/anular",{id_venta:aData.nVenCodigo}, successAnularVenta, null);
@@ -117,10 +173,13 @@ $(document).ready(function(){
 
 
 var arrayCheck = new Array();
-	var accesosOptions = {
+	var anuladosOptions = {
 		"aoColumns":[
-			{ "mDataProp": "producto"},
-			{ "mDataProp": "total"},
+			{ "mDataProp": "Codproducto"},
+			{ "mDataProp": "nombre"},
+			{ "mDataProp": "cantidad"},
+			{ "mDataProp": "preciounitario"},
+			{ "mDataProp": "importe"},
 			{ "mDataProp": "check"}
 		],
 		"fnCreatedRow":function(nRow, aData, iDisplayIndex)
@@ -129,24 +188,24 @@ var arrayCheck = new Array();
 			$(nRow).find(".cbox").change(function(){
 				if($(this).is(':checked'))
 				{
-					$(nRow).find(".desc").text(" Anulado");
+					$(nRow).find(".desc").text("Se Anula");
 					aData.estado = 1;
 				}
 				else
 				{
-					$(nRow).find(".desc").text(" No se Anula");
+					$(nRow).find(".desc").text("");
 					aData.estado = 0;
 				}
 			});
 		}
 	};
-	accesosTable = createDataTable2('tbl_anulado',accesosOptions);
+	anuladosTable = createDataTable1('tbl_anulado',anuladosOptions);
 });
 
 function reloadTable(fecha,anio,mes,tipo){
 	ventasTable.fnReloadAjax(base_url+"venta/consultar_venta/get_ventas_all/"+fecha+"/"+anio+"/"+mes+"/"+tipo);
 }
 
-function reloadPerfil(id_usuario){
-	accesosTable.fnReloadAjax(base_url+"mantenimiento/usuario/get_accesos_byperfil/"+id_usuario);
+function reloadAnulados(id_venta){
+	anuladosTable.fnReloadAjax(base_url+"venta/consultar_venta/get_ventas_facturadas/"+id_venta);
 }
