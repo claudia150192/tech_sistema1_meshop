@@ -14,13 +14,22 @@ $(document).ready(function(){
 	$("#btn-guardar_modal").click(function(event){
 	  if($('#id_seleccionado').val()!=""){
 		event.preventDefault();
+         var cont=0;
+
+		$('#tbl_anulado tbody tr').each(function () {
+			 if($(this).find('td:eq(5) .desc').html()=="Se Anula"){
+			 	cont=cont+1;
+			 }
+		});
+         
 		$('#tbl_anulado tbody tr').each(function () {
             var cod_producto=$(this).find('td:eq(0)').html();
             var cantidad=$(this).find('td:eq(2)').html();
-             var preciounidad=$(this).find('td:eq(3)').html();
-              var importe=$(this).find('td:eq(4)').html();
-  
-            if($('#tbl_anulado >tbody >tr').length==1){
+            var preciounidad=$(this).find('td:eq(3)').html();
+            var importe=$(this).find('td:eq(4)').html();
+            var no_fila=$('#tbl_anulado >tbody >tr').length;
+           
+            if(no_fila==1){
             	if($('#id_seleccionado').val()==1){
             	enviar($("#AnularForm").attr("action-1"),$("#AnularForm").serializeObject(), null,null);
             	enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe}}, successAnularVenta,error);
@@ -29,11 +38,25 @@ $(document).ready(function(){
              var estado=$(this).find('td:eq(5) .desc').html();
              if(estado=="Se Anula"){
              	if($('#id_seleccionado').val()==1){
-			 alert(estado + " "+cod_producto);
+			     if(cont<no_fila){
+                   enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe}}, successAnularVenta,error);
+			     }else if(cont==no_fila){
+                   enviar($("#AnularForm").attr("action-1"),$("#AnularForm").serializeObject(), null,null);
+            	   enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe}}, successAnularVenta,error);
+			     }else if(cont==0){
+			     		$.niftyNoty({
+			type: 'danger',
+			icon : 'fa fa-times',
+			message : "operación cancelada: No ha seleccionado un producto",
+			container : 'floating',
+			timer : 3000
+		});
+			     	}
+
              }}
          }
         });
-        //$("#myanulador").modal('hide');	
+        $("#AnularForm").reset();	
 		
 	  }else{$.niftyNoty({
 			type: 'danger',

@@ -237,7 +237,7 @@
       	 <div class="row">
 		<div class="panel-body">
 							<table id="tbl_anulado" class="table table-striped table-bordered" cellspacing="0" width="100%"
-									data-source="<?php echo base_url();?>mantenimiento/usuario/get_usuario_all/">
+									data-source="<?php echo base_url();?>venta/consultar_venta/get_ventas_facturadas/">
 								<thead>
 									<tr>
 										<th>Codigo</th>
