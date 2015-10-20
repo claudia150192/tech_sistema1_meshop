@@ -57,6 +57,7 @@ class registrar_venta extends CI_Controller {
 				'nCliCodigo' =>$cod_cliente,
 				'nPerCodigo' => $this->session->userdata('persona')["nPerCodigo"],
 				'montoTotal' => $tota_apagar,
+				'montoinicial' => $tota_apagar,
 				'nTipDocumento' => $id_tipodoc, //Id de la tabla documento generada
 				'formaPago' => $cboFormaPago,
 				'local'=> 1,

@@ -22,11 +22,11 @@ class anular_venta_model extends CI_Model {
 		return $query->result();
 	}
 
-	function anular_venta($idventa,$data){
+	function anular_venta($idventa,$data,$ma,$suba){
 		
 		$this->db->trans_begin();
 
-		$data_actualizar = array('estado' =>'2');
+		$data_actualizar = array('estado' =>'2','montoTotal'=>$ma,'subtotal'=>$suba);
 		$this->db->where('nVenCodigo',$idventa);
 		$this->db->update('venta',$data_actualizar);
 

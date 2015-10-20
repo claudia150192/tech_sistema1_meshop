@@ -73,6 +73,17 @@ class registrar_venta_model extends CI_Model {
 		}
 	}
 
+	public function deleteDetalle($idpro,$idventa)
+	{	
+		$this->db->where('nVenCodigo',$idventa);
+		$this->db->where('nProCodigo',$idpro);
+		if ($this->db->delete('transaccion')){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	function insert_Cronogramapago($data)
 	{	
 		$this->db->insert_batch('cronogramapago', $data);		
@@ -144,6 +155,12 @@ class registrar_venta_model extends CI_Model {
 
 	function obtener_venta($id_venta){
 		$query = $this->db->query("select * from obtener_factura where nVenCodigo=".$id_venta." order by 1");
+
+		return $query->result_array();
+	}
+
+	function obtener_venta3($id_venta){
+		$query = $this->db->query("select * from venta where nVenCodigo=".$id_venta." order by 1");
 
 		return $query->result_array();
 	}

@@ -23,6 +23,7 @@ class anular_venta extends CI_Controller {
 		
 		$id_venta = $this->input->post('id_venta');
 		$Comentarios = $this->input->post('Comentarios');
+		$total_apagar_actual = $this->input->post('tp_actual');
 
 		$data = array(
 			'nVenCodigo' =>$id_venta,
@@ -30,7 +31,12 @@ class anular_venta extends CI_Controller {
 			'nUsuCodigo' => $this->session->userdata('persona')["nUsuCodigo"]
 		);
 
-		$band = $this->mod->anular_venta($id_venta,$data);
+		$this->load->model('venta/registrar_venta_model','rv');
+		$data_impuesto = $this->rv->obtener_venta3($id_venta);
+		$total_pagar_impuesto=$total_apagar_actual+$data_impuesto["impuestoporcentaje"];
+
+        //Anular venta
+		$band = $this->mod->anular_venta($id_venta,$data,$total_pagar_impuesto,$total_apagar_actual);
 		if($band){
 			$return = array("responseCode"=>200, "datos"=>"ok");
 		}else{
@@ -64,6 +70,7 @@ class anular_venta extends CI_Controller {
 		 $band=false;
 		}
 
+
         $this->load->model('venta/registrar_venta_model','rv');
 		$data_documento = $this->rv->obtener_kardex($id_venta,$id_producto);
 
@@ -86,6 +93,10 @@ class anular_venta extends CI_Controller {
 		//insertar kardex
 		$this->load->model('kardex/kardex_model','km');
 		if(!$this->km->insert_bloque($lista3)){
+		$band=false;
+		}
+        //eliminar transaccion
+		if(!$this->rv->deleteDetalle($id_producto,$id_venta)){
 		$band=false;
 		}
 

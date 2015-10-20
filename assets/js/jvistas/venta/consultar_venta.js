@@ -12,16 +12,23 @@ $(document).ready(function(){
 		});
 
 	$("#btn-guardar_modal").click(function(event){
-	  if($('#id_seleccionado').val()!=""){
-		event.preventDefault();
+       event.preventDefault();
          var cont=0;
+         var total_pagar=0;
+         var total_pagar_nose=0;
 
 		$('#tbl_anulado tbody tr').each(function () {
 			 if($(this).find('td:eq(5) .desc').html()=="Se Anula"){
 			 	cont=cont+1;
-			 }
+			 total_pagar_nose=parseFloat(total_pagar_nose)+parseFloat($(this).find('td:eq(4)').html());}
+			 else{total_pagar=parseFloat(total_pagar)+parseFloat($(this).find('td:eq(4)').html());}
+			 
 		});
-         
+
+	  if($('#id_seleccionado').val()!="" && cont==0){
+  
+         if(total_pagar==0){total_pagar=total_pagar_nose;}
+
 		$('#tbl_anulado tbody tr').each(function () {
             var cod_producto=$(this).find('td:eq(0)').html();
             var cantidad=$(this).find('td:eq(2)').html();
@@ -32,36 +39,28 @@ $(document).ready(function(){
             if(no_fila==1){
             	if($('#id_seleccionado').val()==1){
             	enviar($("#AnularForm").attr("action-1"),$("#AnularForm").serializeObject(), null,null);
-            	enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe}}, successAnularVenta,error);
+            	enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe,"tp_actual":total_pagar}}, successAnularVenta,error);
                 }
             }else{
              var estado=$(this).find('td:eq(5) .desc').html();
              if(estado=="Se Anula"){
              	if($('#id_seleccionado').val()==1){
 			     if(cont<no_fila){
-                   enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe}}, successAnularVenta,error);
+                   enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe,"tp_actual":total_pagar}}, successAnularVenta,error);
 			     }else if(cont==no_fila){
                    enviar($("#AnularForm").attr("action-1"),$("#AnularForm").serializeObject(), null,null);
-            	   enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe}}, successAnularVenta,error);
-			     }else if(cont==0){
-			     		$.niftyNoty({
-			type: 'danger',
-			icon : 'fa fa-times',
-			message : "operación cancelada: No ha seleccionado un producto",
-			container : 'floating',
-			timer : 3000
-		});
-			     	}
-
+            	   enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe,"tp_actual":total_pagar}}, successAnularVenta,error);
+			     }
              }}
          }
         });
+        
         $("#AnularForm").reset();	
-		
+
 	  }else{$.niftyNoty({
 			type: 'danger',
 			icon : 'fa fa-times',
-			message : "operación cancelada: No ha seleccionado el tipo de acción",
+			message : "operación cancelada: No ha seleccionado el tipo de acción o no ha seleccionado un producto",
 			container : 'floating',
 			timer : 3000
 		});}
@@ -76,6 +75,8 @@ $(document).ready(function(){
 	});	
 
 	$("#btn-cancelar_modal").click(function (e){
+
+        $("#AnularForm").reset();	
 		$.niftyNoty({
 								type: 'danger',
 								icon : 'fa fa-times',
@@ -84,6 +85,45 @@ $(document).ready(function(){
 								timer : 3000
 		 });
 	});
+
+	$('#AnularForm').bootstrapValidator({
+		excluded: ':disabled',
+	    feedbackIcons: {
+		 valid: 'glyphicon glyphicon-ok',
+		 invalid: 'glyphicon glyphicon-remove',
+		 validating: 'glyphicon glyphicon-refresh'
+	     },
+		fields: {
+			Comentarios: {
+				validators: {
+					notEmpty: {
+						message: 'Este campo es requerido'
+					}
+				}
+			}
+		}
+	}).on('success.form.bv', function (e) {
+		alert("hola");
+        e.preventDefault();
+        $('#AnularForm').modal('hide');
+    });
+
+    $('#AnularForm')
+       .on('shown.bs.modal', function () {
+           $('#AnularForm').find('[name="Comentarios"]').focus();
+        })
+        .on('hidden.bs.modal', function () {
+            $('#AnularForm').bootstrapValidator('resetForm', true);
+        });
+
+
+    $('#myanulador').on('show.bs.modal', function () {
+            
+      $(this).removeData('bs.modal');
+      $('#AnularForm').bootstrapValidator('resetForm', true);
+              
+    });
+
 
 	$("#btn-dia").click(function (e){
 		e.preventDefault();
@@ -154,6 +194,7 @@ $(document).ready(function(){
 				'tooltip':'Anular Venta',
 				'clickfunction': function(nRow, aData, iDisplayIndex) {
 					$("#modal1").click();
+					$("#model_title_anular").html("Causa de la Anulación");
 					$("#id_venta").val(aData.nVenCodigo);
 					reloadAnulados(aData.nVenCodigo);
 					// bootbox.confirm("Desea Anular la Venta?", function(result){

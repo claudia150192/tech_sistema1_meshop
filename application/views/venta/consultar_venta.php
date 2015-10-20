@@ -228,8 +228,11 @@
           <!-- <li class="divider"></li> -->
         </ul>
       </div>
-
-      <input type="text" class="form-control" placeholder="Comentarios" id="Comentarios" class="Comentarios" name="Comentarios">
+   <div class="form-group">
+   	<div class="col-md-5">
+    <input type="text" class="form-control" placeholder="Comentarios" id="Comentarios" class="Comentarios" name="Comentarios"> 
+     </div></div>
+</div>
   </div>
   
 											</div>
@@ -254,7 +257,7 @@
 		</div>
      
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" id="btn-guardar_modal">Guardar</button>
+        <button type="submit" class="btn btn-default" id="btn-guardar_modal">Guardar</button>
         <button type="button" class="btn btn-danger btn-labeled fa fa-close fa-lg" data-dismiss="modal" id="btn-cancelar_modal">Cancelar</button>
       </div>
       </div>
