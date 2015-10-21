@@ -17,6 +17,7 @@
 
 	<!--JAVASCRIPT-->
 	<!--=================================================-->
+
 	<script src="<?php echo base_url();?>assets/js/jquery-2.1.1.min.js"></script>
 	<script src="<?php echo base_url();?>assets/js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url();?>assets/plugins/fast-click/fastclick.min.js"></script>
@@ -29,7 +30,6 @@
 	<script src="<?php echo base_url();?>assets/plugins/bootstrap-select/bootstrap-select.min.js"></script>
 
 	<script src="<?php echo base_url();?>assets/plugins/chosen/chosen.jquery.min.js"></script>
-	
 	<script src="<?php echo base_url();?>assets/plugins/datatables/jquery.dataTables.js"></script>
 	<script src="<?php echo base_url();?>assets/plugins/datatables/dataTables.bootstrap.js"></script>
 	<script src="<?php echo base_url();?>assets/js/util/dataTables.tableTools.js"></script>	
@@ -48,7 +48,7 @@
     <script src="<?php echo base_url();?>assets/plugins/bootstrap-validator/bootstrapValidator.min.js"></script>
     <script src="<?php echo base_url();?>assets/plugins/morris-js/morris.min.js"></script>
     <script src="<?php echo base_url();?>assets/plugins/morris-js/raphael-js/raphael.min.js"></script>
-   
+  
     <!--<script src="<?php echo base_url();?>assets/js/typeahead/js/bootstrap-typeahead.js"></script>
     <script src="<?php echo base_url();?>assets/js/typeahead/dist/typeahead.jquery.js"></script>
     -->
@@ -65,6 +65,8 @@
             $('#<?=$subactive ?>').addClass('active');
         });
     </script>
+  
+
     <script type="text/javascript">
 
             /*var usuario = getAjaxObject(base_url+"accesos/servicios/get_user/persona");

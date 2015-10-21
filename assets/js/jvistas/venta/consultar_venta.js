@@ -68,6 +68,7 @@ $(document).ready(function(){
 	});	
 
     $("[id*='_accion']").click(function(event){
+    	$("#id_seleccionado").keyup();
 		if($(this).html()=="Devolución pactada"){$("#id_seleccionado").val(1);}
 		else if($(this).html()=="Por daño"){$("#id_seleccionado").val(0);}
 
@@ -86,44 +87,39 @@ $(document).ready(function(){
 		 });
 	});
 
+	var faIcon = {
+		valid: 'fa fa-check-circle fa-lg text-success',
+		invalid: 'fa fa-times-circle fa-lg',
+		validating: 'fa fa-refresh'
+	}
+
 	$('#AnularForm').bootstrapValidator({
-		excluded: ':disabled',
-	    feedbackIcons: {
-		 valid: 'glyphicon glyphicon-ok',
-		 invalid: 'glyphicon glyphicon-remove',
-		 validating: 'glyphicon glyphicon-refresh'
-	     },
+		excluded: [':disabled'],
+		feedbackIcons: faIcon,
 		fields: {
-			Comentarios: {
+		comentarios: {
 				validators: {
 					notEmpty: {
-						message: 'Este campo es requerido'
+						message: '*Debe de agregar Comentarios'
+					}
+				}
+			},
+		id_seleccionado: {
+				validators: {
+					notEmpty: {
+						message: '*No ha seleccionado la acción'
+					}
+				}
+			},
+		total_cont: {
+				validators: {
+					notEmpty: {
+						message: '*No ha seleccionado el/los productos'
 					}
 				}
 			}
 		}
-	}).on('success.form.bv', function (e) {
-		alert("hola");
-        e.preventDefault();
-        $('#AnularForm').modal('hide');
-    });
-
-    $('#AnularForm')
-       .on('shown.bs.modal', function () {
-           $('#AnularForm').find('[name="Comentarios"]').focus();
-        })
-        .on('hidden.bs.modal', function () {
-            $('#AnularForm').bootstrapValidator('resetForm', true);
-        });
-
-
-    $('#myanulador').on('show.bs.modal', function () {
-            
-      $(this).removeData('bs.modal');
-      $('#AnularForm').bootstrapValidator('resetForm', true);
-              
-    });
-
+	});
 
 	$("#btn-dia").click(function (e){
 		e.preventDefault();
@@ -254,11 +250,13 @@ var arrayCheck = new Array();
 				{
 					$(nRow).find(".desc").text("Se Anula");
 					aData.estado = 1;
+					$("#total_cont").val(aData.estado);
 				}
 				else
 				{
 					$(nRow).find(".desc").text("");
 					aData.estado = 0;
+					$("#total_cont").val("");
 				}
 			});
 		}

@@ -22,7 +22,7 @@ class anular_venta extends CI_Controller {
 		$band=false;
 		
 		$id_venta = $this->input->post('id_venta');
-		$Comentarios = $this->input->post('Comentarios');
+		$Comentarios = $this->input->post('comentarios');
 		$total_apagar_actual = $this->input->post('tp_actual');
 
 		$data = array(

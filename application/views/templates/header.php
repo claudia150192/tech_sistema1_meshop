@@ -22,9 +22,10 @@
 	<!-- <script src="<?php echo base_url();?>assets/plugins/datatables/extensions/TableTools/css/dataTables.tableTools.css"></script>-->
 	<link href="<?php echo base_url();?>assets/plugins/bootstrap-datepicker/bootstrap-datepicker.css" rel="stylesheet">
     <link href="<?php echo base_url();?>assets/css/datatables.actions.css" rel="stylesheet" />
-	<link href="<?php echo base_url();?>assets/css/themes/type-c/theme-dark.css" rel="stylesheet">
+	
 	<link href="<?php echo base_url();?>assets/plugins/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
 	<link href="<?php echo base_url();?>assets/plugins/morris-js/morris.min.css" rel="stylesheet">
+	<link href="<?php echo base_url();?>assets/css/widgets.min.css" rel="stylesheet">
 	
 
 </head>
@@ -63,7 +64,65 @@
 
 					</ul>
 					<ul class="nav navbar-top-links pull-right">
+		
+								<li class="dropdown">
+							<a href="#" data-toggle="dropdown" class="dropdown-toggle">
+								<i class="fa fa-bell fa-lg"></i>
+								<span class="badge badge-header badge-danger">5</span>
+							</a>
 
+							<!--Notification dropdown menu-->
+							<div class="dropdown-menu widget-notifications no-padding with-arrow" style="width: 300px">
+							
+								<div class="nano scrollable has-scrollbar" style="height: 0px;">
+									<div class="nano-content" tabindex="0" style="right: -17px;">
+										<ul class="head-list">
+<div class="notification">
+											<div class="notification-title text-danger">SYSTEM</div>
+											<div class="notification-description"><strong>Error 500</strong>: Syntax error in index.php at line <strong>461</strong>.</div>
+											<div class="notification-ago">12h ago</div>
+											<div class="notification-icon fa fa-hdd-o bg-danger"></div>
+										</div> <!-- / .notification -->
+										<div class="notification">
+											<div class="notification-title text-info">STORE</div>
+											<div class="notification-description">You have <strong>9</strong> new orders.</div>
+											<div class="notification-ago">12h ago</div>
+											<div class="notification-icon fa fa-truck bg-info"></div>
+										</div> <!-- / .notification -->
+
+										<div class="notification">
+											<div class="notification-title text-default">CRON DAEMON</div>
+											<div class="notification-description">Job <strong>"Clean DB"</strong> has been completed.</div>
+											<div class="notification-ago">12h ago</div>
+											<div class="notification-icon fa fa-clock-o bg-default"></div>
+										</div> <!-- / .notification -->
+
+										<div class="notification">
+											<div class="notification-title text-success">SYSTEM</div>
+											<div class="notification-description">Server <strong>up</strong>.</div>
+											<div class="notification-ago">12h ago</div>
+											<div class="notification-icon fa fa-hdd-o bg-success"></div>
+										</div> <!-- / .notification -->
+
+										<div class="notification">
+											<div class="notification-title text-warning">SYSTEM</div>
+											<div class="notification-description"><strong>Warning</strong>: Processor load <strong>92%</strong>.</div>
+											<div class="notification-ago">12h ago</div>
+											<div class="notification-icon fa fa-hdd-o bg-warning"></div>
+										</div> <!-- / .notification -->
+											
+										</ul>
+									</div>
+								<div class="nano-pane" style="display: none;"><div class="nano-slider" style="height: 20px; transform: translate(0px, 0px);"></div></div></div>
+
+								<!--Dropdown footer-->
+								<div class="pad-all bord-top">
+									
+										<i class="fa fa-angle-right fa-lg pull-right"></i>Para ver más desplácese hacia abajo
+									
+								</div>
+							</div>
+						</li>
 						<!--User dropdown-->
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<li class="dropdown">
@@ -91,25 +150,25 @@
 							<div class="dropdown-menu dropdown-menu-md dropdown-menu-right with-arrow panel-default">
 							
 								<!-- User dropdown menu -->
-								<!--<ul class="head-list">
+								<ul class="head-list">
 									<li>
 										<a href="#">
 											<i class="fa fa-user fa-fw fa-lg"></i> Profile
 										</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a href="#">
 											<span class="badge badge-danger pull-right">9</span>
 											<i class="fa fa-envelope fa-fw fa-lg"></i> Messages
 										</a>
-									</li>
+									</li> -->
 									<li>
 										<a href="#">
 											<span class="label label-success pull-right">New</span>
 											<i class="fa fa-gear fa-fw fa-lg"></i> Settings
 										</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a href="#">
 											<i class="fa fa-question-circle fa-fw fa-lg"></i> Help
 										</a>
@@ -118,8 +177,8 @@
 										<a href="#">
 											<i class="fa fa-lock fa-fw fa-lg"></i> Lock screen
 										</a>
-									</li>
-								</ul>-->
+									</li> -->
+								</ul>
 
 								<!-- Dropdown footer -->
 								<div class="pad-all text-right">
