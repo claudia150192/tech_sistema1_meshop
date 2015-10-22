@@ -73,6 +73,28 @@ class registrar_venta_model extends CI_Model {
 		}
 	}
 
+
+		function cambiarproducto($idventa,$ma,$suba){
+		
+		$this->db->trans_begin();
+
+		$data_actualizar = array('montoTotal'=>$ma,'subtotal'=>$suba);
+		$this->db->where('nVenCodigo',$idventa);
+		$this->db->update('venta',$data_actualizar);
+
+		if ($this->db->trans_status() === FALSE)
+		{
+			$this->db->trans_rollback();
+			return false;
+		}
+		else
+		{
+			$this->db->trans_commit();
+			return true;
+		}
+	}
+
+
 	public function deleteDetalle($idpro,$idventa)
 	{	
 		$this->db->where('nVenCodigo',$idventa);
@@ -162,7 +184,7 @@ class registrar_venta_model extends CI_Model {
 	function obtener_venta3($id_venta){
 		$query = $this->db->query("select * from venta where nVenCodigo=".$id_venta." order by 1");
 
-		return $query->result_array();
+		return $query->row_array();
 	}
 
 	function obtener_kardex($id_venta,$id_producto){

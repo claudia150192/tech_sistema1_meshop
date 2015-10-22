@@ -16,17 +16,25 @@ $(document).ready(function(){
          var cont=0;
          var total_pagar=0;
          var total_pagar_nose=0;
+         var no_fila=$('#tbl_anulado >tbody >tr').length;
 
-		$('#tbl_anulado tbody tr').each(function () {
+        $('#AnularForm').data("bootstrapValidator").validate();
+      
+      
+      	$('#tbl_anulado tbody tr').each(function () {
 			 if($(this).find('td:eq(5) .desc').html()=="Se Anula"){
 			 	cont=cont+1;
 			 total_pagar_nose=parseFloat(total_pagar_nose)+parseFloat($(this).find('td:eq(4)').html());}
 			 else{total_pagar=parseFloat(total_pagar)+parseFloat($(this).find('td:eq(4)').html());}
-			 
+			
 		});
+        
+         if(no_fila==1){cont=no_fila;}
 
-	  if($('#id_seleccionado').val()!="" && cont==0){
-  
+	  if(cont!=0){
+
+	  if($("#tipo").val()!="" && $("#Comentarios").val()!=""){
+         
          if(total_pagar==0){total_pagar=total_pagar_nose;}
 
 		$('#tbl_anulado tbody tr').each(function () {
@@ -34,46 +42,36 @@ $(document).ready(function(){
             var cantidad=$(this).find('td:eq(2)').html();
             var preciounidad=$(this).find('td:eq(3)').html();
             var importe=$(this).find('td:eq(4)').html();
-            var no_fila=$('#tbl_anulado >tbody >tr').length;
            
             if(no_fila==1){
-            	if($('#id_seleccionado').val()==1){
+            	if($('#tipo').val()==1){
             	enviar($("#AnularForm").attr("action-1"),$("#AnularForm").serializeObject(), null,null);
-            	enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe,"tp_actual":total_pagar}}, successAnularVenta,error);
+            	enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe}}, successAnularVenta,error);
                 }
             }else{
              var estado=$(this).find('td:eq(5) .desc').html();
              if(estado=="Se Anula"){
-             	if($('#id_seleccionado').val()==1){
+             	if($('#tipo').val()==1){
 			     if(cont<no_fila){
-                   enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe,"tp_actual":total_pagar}}, successAnularVenta,error);
+			     	alert($('#id_venta').val(),);
+                   enviar($("#AnularForm").attr("action-3"),{formulario:{"id_venta":$('#id_venta').val(),"tp_actual":total_pagar}}, successAnularVenta,error);
+                   enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe}}, successAnularVenta,error);
 			     }else if(cont==no_fila){
                    enviar($("#AnularForm").attr("action-1"),$("#AnularForm").serializeObject(), null,null);
-            	   enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe,"tp_actual":total_pagar}}, successAnularVenta,error);
+            	   enviar($("#AnularForm").attr("action-2"),{formulario:{"id_venta":$('#id_venta').val(),"id_producto":cod_producto,"cantidad":cantidad,"preciounidad":preciounidad,"importe":importe}}, successAnularVenta,error);
 			     }
+
              }}
          }
         });
         
-        $("#AnularForm").reset();	
+        $("#AnularForm").reset();
+        $("#myanulador").hide();	
+}
+	  }else{$("#mensaje").show();}
 
-	  }else{$.niftyNoty({
-			type: 'danger',
-			icon : 'fa fa-times',
-			message : "operación cancelada: No ha seleccionado el tipo de acción o no ha seleccionado un producto",
-			container : 'floating',
-			timer : 3000
-		});}
-			
 	});	
 
-    $("[id*='_accion']").click(function(event){
-    	$("#id_seleccionado").keyup();
-		if($(this).html()=="Devolución pactada"){$("#id_seleccionado").val(1);}
-		else if($(this).html()=="Por daño"){$("#id_seleccionado").val(0);}
-
-		$("#model_title_anular").html("Causa de la Anulación - "+$(this).html());
-	});	
 
 	$("#btn-cancelar_modal").click(function (e){
 
@@ -85,6 +83,7 @@ $(document).ready(function(){
 								container : 'floating',
 								timer : 3000
 		 });
+		$('#AnularForm').bootstrapValidator('resetForm', true);
 	});
 
 	var faIcon = {
@@ -94,7 +93,7 @@ $(document).ready(function(){
 	}
 
 	$('#AnularForm').bootstrapValidator({
-		excluded: [':disabled'],
+		live: [':disabled'],
 		feedbackIcons: faIcon,
 		fields: {
 		comentarios: {
@@ -102,24 +101,19 @@ $(document).ready(function(){
 					notEmpty: {
 						message: '*Debe de agregar Comentarios'
 					}
+					
 				}
 			},
-		id_seleccionado: {
-				validators: {
-					notEmpty: {
-						message: '*No ha seleccionado la acción'
-					}
-				}
-			},
-		total_cont: {
-				validators: {
-					notEmpty: {
-						message: '*No ha seleccionado el/los productos'
-					}
-				}
-			}
+			'tipo': {
+                validators: {
+                    notEmpty: {
+                        message: '*No ha seleccionado el tipo de acción'
+                    }
+                }
+               }
 		}
 	});
+
 
 	$("#btn-dia").click(function (e){
 		e.preventDefault();
@@ -193,6 +187,7 @@ $(document).ready(function(){
 					$("#model_title_anular").html("Causa de la Anulación");
 					$("#id_venta").val(aData.nVenCodigo);
 					reloadAnulados(aData.nVenCodigo);
+
 					// bootbox.confirm("Desea Anular la Venta?", function(result){
 					// 	if(result==true){
 					// 		enviar(base_url+"venta/anular_venta/anular",{id_venta:aData.nVenCodigo}, successAnularVenta, null);
@@ -250,14 +245,26 @@ var arrayCheck = new Array();
 				{
 					$(nRow).find(".desc").text("Se Anula");
 					aData.estado = 1;
-					$("#total_cont").val(aData.estado);
+				
 				}
 				else
 				{
 					$(nRow).find(".desc").text("");
 					aData.estado = 0;
-					$("#total_cont").val("");
+					
 				}
+
+				  var cont=0;
+
+        $('#tbl_anulado tbody tr').each(function () {
+			 if($(this).find('td:eq(5) .desc').html()=="Se Anula"){
+			 	cont=cont+1;
+			}
+		});
+		
+         if(cont==0){$("#mensaje").show();}else{$("#mensaje").hide();}
+         
+
 			});
 		}
 	};

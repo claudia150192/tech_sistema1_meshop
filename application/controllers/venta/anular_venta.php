@@ -23,20 +23,41 @@ class anular_venta extends CI_Controller {
 		
 		$id_venta = $this->input->post('id_venta');
 		$Comentarios = $this->input->post('comentarios');
-		$total_apagar_actual = $this->input->post('tp_actual');
-
+	
 		$data = array(
 			'nVenCodigo' =>$id_venta,
 			'descripcion' => "Venta Anulada: ".$Comentarios,
 			'nUsuCodigo' => $this->session->userdata('persona')["nUsuCodigo"]
 		);
 
+        //Anular venta
+		$band = $this->mod->anular_venta($id_venta,$data);
+		if($band){
+			$return = array("responseCode"=>200, "datos"=>"ok");
+		}else{
+			$return = array("responseCode"=>400, "datos"=>"bad");
+		}
+
+		$return = json_encode($return);
+		echo $return;
+	}
+
+
+		public function cambiarproducto(){
+
+		$this->load->model('venta/registrar_venta_model','mod');
+		$band=false;
+		
+		$id_venta = $form["id_venta"];
+		$total_apagar_actual =$form['tp_actual'];
+
+
 		$this->load->model('venta/registrar_venta_model','rv');
 		$data_impuesto = $this->rv->obtener_venta3($id_venta);
 		$total_pagar_impuesto=$total_apagar_actual+$data_impuesto["impuestoporcentaje"];
 
         //Anular venta
-		$band = $this->mod->anular_venta($id_venta,$data,$total_pagar_impuesto,$total_apagar_actual);
+		$band = $this->mod->cambiarproducto($id_venta,$total_pagar_impuesto,$total_apagar_actual);
 		if($band){
 			$return = array("responseCode"=>200, "datos"=>"ok");
 		}else{

@@ -211,37 +211,26 @@
       </div>
       <div class="modal-body">
       	<form id="AnularForm" class="form-horizontal" action-1="<?php echo base_url();?>venta/anular_venta/anular"
-      		action-2="<?php echo base_url();?>venta/anular_venta/kardex_anular">  
+      		action-2="<?php echo base_url();?>venta/anular_venta/kardex_anular"
+      		action-3="<?php echo base_url();?>venta/anular_venta/cambiarproducto">  
       	<div class="row">
 												<div class="col-lg-12">
-<div class="form-group">	
-													<div class="input-group">
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle"
-                data-toggle="dropdown">
-          Acción <span class="caret"></span>
-        </button>
-     
-        <ul class="dropdown-menu" role="menu">
-          <li ><a href="#" id="1_accion">Por daño</a></li>
-           <li ><a href="#" id="2_accion">Devolución pactada</a></li>
+
+												
+        <select role="menu" id="tipo" name="tipo" class="form-control">
+        	<option value="">Acción</option>
+          <option value="0">Por daño</option>
+           <option value="1">Devolución pactada</option>
           <!-- <li class="divider"></li> -->
-        </ul>
-      </div>
-       
+        </select>
     <input type="text" class="form-control" placeholder="Comentarios" id="Comentarios" class="Comentarios" name="comentarios">
-     <span></span>
-     <input type="text" id="id_seleccionado" class="id_seleccionado" name="id_seleccionado"> 
-      <span></span>
-     <input type="text" id="total_cont" class="total_cont" name="total_cont"> 
-     <span></span>
-    </div>
-</div>
-  </div>
-  
-											</div>
+     <span ></span>
+    <span id="mensaje" style="font-size: 10px;color: #959595;" hidden>*Debe de seleccionar al menos un producto.</span>
+
+  </div> 									
       	 </div>
       	 <div class="row">
+      	 	
 		<div class="panel-body">
 							<table id="tbl_anulado" class="table table-striped table-bordered" cellspacing="0" width="100%"
 									data-source="<?php echo base_url();?>venta/consultar_venta/get_ventas_facturadas/">
@@ -256,12 +245,20 @@
 									</tr>
 								</thead>
 								<tbody>
+									
+
 								</tbody>
 							</table>
+
 		</div>
-     
+        
+
+       
+          
+       
+		
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary btn-labeled fa fa-check fa-lg" >Guardar</button>
+        <button type="button" class="btn btn-primary btn-labeled fa fa-check fa-lg" id="btn-guardar_modal">Guardar</button>
         <button type="button" class="btn btn-danger btn-labeled fa fa-close fa-lg" data-dismiss="modal" id="btn-cancelar_modal">Cancelar</button>
       </div>
       </div>
